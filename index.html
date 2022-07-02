@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//PT-BR">-->
+<html xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>Code Splicer</title>
+
+	<style>
+	</style>
+
+	<b:skin><![CDATA[]]></b:skin>
+</head>
+<body>
+	<b:section class='header-section' id='header-section' maxwidgets='1' showaddelement='no'/>
+	
+	<main>
+		<input type="file" id="filepicker" name="fileList" webkitdirectory="webkitdirectory" multiple="multiple" />
+		<ul id="listing"></ul>
+		<pre id="output"></pre>
+	</main>
+
+	<noscript>
+		You need to enable JavaScript to run this app.<p/>
+        Você precisa ativar o JavaScript para executar esta aplicação.
+    </noscript>
+
+	<script type='text/javascript' id='script_main'>
+	//<![CDATA[
+
+		document.getElementById("filepicker").addEventListener("change", function(event) {
+			let output = document.getElementById("listing");
+			let files = event.target.files;
+
+			for (let i=0; i<files.length; i++) {
+				let item = document.createElement("li");
+				item.innerHTML = files[i].webkitRelativePath;
+				output.appendChild(item);
+				loadFile(files[i]);
+			};
+		}, false);
+
+		async function loadFile(file) {
+			let text = await file.text();
+			document.getElementById('output').textContent += text + '\r\n';
+		}
+
+	//]]>
+	</script>
+</body>
+
+<!-- References:
+/*
+https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory
+https://www.delftstack.com/pt/howto/javascript/read-text-file-in-javascript/
+*/
+-->
+</html>
