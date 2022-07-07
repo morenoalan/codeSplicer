@@ -16,14 +16,14 @@
 			--color-Background:#282A36;
 			--color-Foreground:#F8F8F2;
 			--color-Selection:#44475A;
-			--color-Comment: #6272A4;
-			--color-Red: #FF5555;
-			--color-Orange: #FFB86C;
-			--color-Yellow: #F1FA8C;
-			--color-Green: #50FA7B;
-			--color-Purple: #BD93F9;
-			--color-Cyan: #8BE9FD;
-			--color-Pink: #FF79C6;
+			--color-Comment:#6272A4;
+			--color-Red:#FF5555;
+			--color-Orange:#FFB86C;
+			--color-Yellow:#F1FA8C;
+			--color-Green:#50FA7B;
+			--color-Purple:#BD93F9;
+			--color-Cyan:#8BE9FD;
+			--color-Pink:#FF79C6;
 		}
 		html, body {
             margin: 0;
@@ -61,7 +61,7 @@
 		#titleHeader > span {
 			color: var(--color-Foreground);
 			background: var(--color-Pink);
-			box-shadow: 0px 0 0 0 var(--color-Pink);
+			box-shadow: 5px 0 0 0 var(--color-Pink);
 			font-style: italic;
 		}
 		main {
@@ -71,7 +71,7 @@
 			cursor: pointer;
 			width: 500px;
 		}
-		#output {
+		#outputField {
 			background-color: var(--color-Background);
 			text-align: left;
 			width: 90vw;
@@ -86,13 +86,14 @@
 	<b:section class='header-section' id='header-section' maxwidgets='1' showaddelement='no'/>
 
 	<header id="header">
-		<div id="titleHeader">code<span>Splice</span></div>
+		<div id="titleHeader">code<span>Splicer</span></div>
 	</header>
 
 	<main id="main">
 		<input type="file" id="filepicker" name="fileList" webkitdirectory="webkitdirectory" multiple="multiple" />
 		<ul id="listing"></ul>
-		<pre id="output"></pre>
+		<ul id="classified"></ul>
+		<pre id="outputField"></pre>
 	</main>
 
 	<footer id="footer">
@@ -121,19 +122,14 @@
 
 		async function loadFile(file) {
 			let text = await file.text();
-			document.getElementById('output').textContent += text + '\r\n';
+			document.getElementById('outputField').textContent += text + '\r\n';
+
+			let element1 = document.getElementsByTagName("link");
+			console.log(element1[0]).getAttributeNode("href").value;
 		}
 
 	//]]>
 	</script>
 </body>
 
-<!-- References:
-/*
-https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/webkitdirectory
-https://www.delftstack.com/pt/howto/javascript/read-text-file-in-javascript/
-https://spec.draculatheme.com/
-https://stackoverflow.com/questions/248011/how-do-i-wrap-text-in-a-pre-tag
-*/
--->
 </html>
