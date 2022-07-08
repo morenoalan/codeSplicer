@@ -108,6 +108,9 @@
 	<script type='text/javascript' id='script_main'>
 	//<![CDATA[
 
+		var filesList = [];
+		var relativePath = "";
+
 		document.getElementById("filepicker").addEventListener("change", function(event) {
 			let output = document.getElementById("listing");
 			let files = event.target.files;
@@ -115,17 +118,53 @@
 			for (let i=0; i<files.length; i++) {
 				let item = document.createElement("li");
 				item.innerHTML = files[i].webkitRelativePath;
+				filesList.push(files[i].webkitRelativePath);
 				output.appendChild(item);
 				loadFile(files[i]);
 			};
+			relativePath = files[0].webkitRelativePath.slice(0, (files[0].webkitRelativePath.length - files[0].name.length));
+			console.log(files);
+			console.log(relativePath);
+			getHtmlFile();
 		}, false);
 
 		async function loadFile(file) {
 			let text = await file.text();
 			document.getElementById('outputField').textContent += text + '\r\n';
-
+			/*
 			let element1 = document.getElementsByTagName("link");
 			console.log(element1[0]).getAttributeNode("href").value;
+			*/
+		}
+
+		function htmlFinder(){
+			/*
+			search index; search others; recognize between the other what is the main;
+			variation with function getHtmlFile;
+			*/
+		}
+
+		function cssFinder(){
+			/*
+			search all css, by term: rel="stylesheet" into link tag;
+			*/ 
+		}
+
+		function jsFinder(){
+			/*
+			search all js, by term: src!="" into script tag;
+			*/
+		}
+
+		async function getHtmlFile() {
+			let htmlFile = "index.html";
+			for(let i=0; i<filesList.length; i++){
+				console.log(filesList[i] + '\r\n');
+			}
+			console.log(relativePath + htmlFile);
+			let item2 = relativePath + htmlFile;
+			let file2 = await item2.text();
+			document.getElementById('outputField').textContent += file2;
 		}
 
 	//]]>
