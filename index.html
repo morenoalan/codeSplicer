@@ -121,39 +121,41 @@
 				item.innerHTML = files[i].webkitRelativePath;
 				filesList.push(files[i].webkitRelativePath);
 				output.appendChild(item);
-				/*loadFile(files[i]);*/
 			};
 			relativePath = files[0].webkitRelativePath.slice(0, (files[0].webkitRelativePath.length - files[0].name.length));
-			console.log(files);
-			console.log(relativePath);
 			htmlFinder();
 		}, false);
 
 		async function loadFile(file) {
 			let text = await file.text();
 			document.getElementById('outputField').textContent += text + '\r\n';
-			/*
-			let element1 = document.getElementsByTagName("link");
-			console.log(element1[0]).getAttributeNode("href").value;
-			*/
+		}
+
+		fileFinder(file){
+			let fileToFind = file;
+			for (let i=0; i<filesList.length; i++) {
+				if (files[i].name==fileToFile){
+					loadFile(files[i]);
+					return;
+				}else{
+					console.log(fileToFile + " not found.");
+				}
+			}
 		}
 
 		function htmlFinder() {
 			let htmlFile = "index.html";
-			for (let i=0; i<filesList.length; i++) {
-				if (files[i].name==htmlFile){
-					loadFile(files[i]);
-					return;
-				}else{
-					console.log(htmlFile + " not found.");
-				}
-			}
+			fileFinder(htmlFile);
 		}
 
 		function cssFinder(){
 			/*
 			search all css, by term: rel="stylesheet" into link tag;
-			*/ 
+			*/
+			/*
+			let element = document.getElementsByTagName("link");
+			console.log(element[0]).getAttributeNode("href").value;
+			*/
 		}
 
 		function jsFinder(){
