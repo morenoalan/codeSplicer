@@ -101,8 +101,8 @@
 	</footer>
 
 	<noscript>
-		You need to enable JavaScript to run this app.<p/>
-        Você precisa ativar o JavaScript para executar esta aplicação.
+		EN: You need to enable JavaScript to run this app.<p/>
+        PT: Você precisa ativar o JavaScript para executar esta aplicação.
     </noscript>
 
 	<script type='text/javascript' id='script_main'>
@@ -111,8 +111,9 @@
 		var filesList = [];
 		var relativePath = "";
 		var files;
+		var generalFile;
 
-		document.getElementById("filepicker").addEventListener("change", function(event) {
+		document.getElementById("filepicker").addEventListener("change", function(event){
 			let output = document.getElementById("listing");
 			files = event.target.files;
 
@@ -126,7 +127,7 @@
 			htmlFinder();
 		}, false);
 
-		async function loadFile(file) {
+		async function loadFile(file){
 			let text = await file.text();
 			document.getElementById('outputField').textContent += text + '\r\n';
 		}
@@ -135,6 +136,7 @@
 			let fileToFind = file;
 			for (let i=0; i<filesList.length; i++) {
 				if (files[i].name==fileToFile){
+					generalFile = files[i].text();
 					loadFile(files[i]);
 					return;
 				}else{
@@ -143,7 +145,7 @@
 			}
 		}
 
-		function htmlFinder() {
+		function htmlFinder(){
 			let htmlFile = "index.html";
 			fileFinder(htmlFile);
 		}
@@ -163,6 +165,8 @@
 			search all js, by term: src!="" into script tag;
 			*/
 		}
+
+		htmlFinder();
 
 	//]]>
 	</script>
