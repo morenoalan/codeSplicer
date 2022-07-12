@@ -112,6 +112,7 @@
 		var relativePath = "";
 		var files;
 		var generalFile;
+		var mailman;
 
 		document.getElementById("filepicker").addEventListener("change", function(event){
 			let output = document.getElementById("listing");
@@ -136,7 +137,8 @@
 			let fileToFind = file;
 			for (let i=0; i<filesList.length; i++) {
 				if (files[i].name==fileToFile){
-					generalFile = files[i].text();
+					mailman = files[i].text();
+					console.log(mailman);
 					loadFile(files[i]);
 					return;
 				}else{
@@ -148,6 +150,8 @@
 		function htmlFinder(){
 			let htmlFile = "index.html";
 			fileFinder(htmlFile);
+			generalFile = mailman;
+			console.log(generalFile);
 		}
 
 		function cssFinder(){
@@ -158,6 +162,7 @@
 			let element = document.getElementsByTagName("link");
 			console.log(element[0]).getAttributeNode("href").value;
 			*/
+
 		}
 
 		function jsFinder(){
