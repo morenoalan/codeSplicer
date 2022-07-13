@@ -126,6 +126,7 @@
 			};
 			relativePath = files[0].webkitRelativePath.slice(0, (files[0].webkitRelativePath.length - files[0].name.length));
 			htmlFinder();
+			cssFinder();
 		}, false);
 
 		async function loadFile(file){
@@ -138,8 +139,7 @@
 			console.log(file);
 			for (let i=0; i<filesList.length; i++) {
 				if (files[i].name=fileToFind){
-					mailman = files[i].text();
-					loadFile(files[i]);
+					mailman = files[i];
 					return;
 				}else{
 					console.log(fileToFile + " not found.");
@@ -152,6 +152,7 @@
 			fileFinder(htmlFile);
 			generalFile = mailman;
 			console.log(generalFile);
+			loadFile(generalFile);
 		}
 
 		function cssFinder(){
@@ -162,6 +163,13 @@
 			let element = document.getElementsByTagName("link");
 			console.log(element[0]).getAttributeNode("href").value;
 			*/
+			let parser = new DOMParser();
+			let text = generalFile.text();
+			console.log(text);
+			let xmlDoc = parser.parseFromString(text,"text/xml");
+			let tagsList = xmlDoc.getElementsByTagName('link');
+			console.log(xmlDoc);
+			console.log(tagsList[0].getAttributeNode("href").value);
 		}
 
 		function jsFinder(){
