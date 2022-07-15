@@ -108,6 +108,8 @@
 	<script type='text/javascript' id='script_main'>
 	//<![CDATA[
 
+		/*"use strict";*/
+
 		var filesList = [];
 		var relativePath = "";
 		var files;
@@ -138,7 +140,11 @@
 			let fileToFind = file;
 			console.log(file);
 			for (let i=0; i<filesList.length; i++) {
-				if (files[i].name=fileToFind){
+				let fileLeftHand = files[i].name.toLowerCase();
+				console.log(fileLeftHand);
+				let fileRightHand = fileToFind.toLowerCase();
+				console.log(fileRightHand);
+				if (fileLeftHand=fileRightHand){
 					mailman = files[i];
 					return;
 				}else{
@@ -168,8 +174,10 @@
 			console.log(text);
 			let xmlDoc = parser.parseFromString(text,"text/xml");
 			let tagsList = xmlDoc.getElementsByTagName('link');
+			let tagsList2 = xmlDoc.querySelector('link');
 			console.log(xmlDoc);
 			console.log(tagsList[0].getAttributeNode("href").value);
+			console.log(tagsList2[0].getAttributeNode("href").value);
 		}
 
 		function jsFinder(){
