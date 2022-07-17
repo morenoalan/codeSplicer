@@ -94,6 +94,7 @@
 		<ul id="listing"></ul>
 		<ul id="classified"></ul>
 		<pre id="outputField"></pre>
+		<div id="supportEditor" style="visibility: hidden;"></div>
 	</main>
 
 	<footer id="footer">
@@ -148,7 +149,7 @@
 				if (fileLeftHand==fileRightHand){
 					mailman = files[i];
 					return;
-				}else{				
+				}else{
 					console.log(fileToFile + " not found.");
 				}
 			}
@@ -170,15 +171,22 @@
 			let element = document.getElementsByTagName("link");
 			console.log(element[0]).getAttributeNode("href").value;
 			*/
+			let importing = document.getElementById('outputField').textContent;
+			let text = document.getElementById('supportEditor').innerHTML;
+			text = importing;
+			let tagsList = text.getElementsByTagName('link');
+			console.log(tagsList[0].getAttributeNode("href").value);
+			/*
 			let parser = new DOMParser();
 			let text = generalFile.text();
 			console.log(text);
-			let xmlDoc = parser.parseFromString(text,"text/xml");
+			let xmlDoc = parser.parseFromString(text,"text/html");
 			let tagsList = xmlDoc.getElementsByTagName('link');
 			let tagsList2 = xmlDoc.querySelector('link');
 			console.log(xmlDoc);
 			console.log(tagsList[0].getAttributeNode("href").value);
 			console.log(tagsList2[0].getAttributeNode("href").value);
+			*/
 		}
 
 		function jsFinder(){
