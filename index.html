@@ -108,7 +108,7 @@
 	<script type='text/javascript' id='script_main'>
 	//<![CDATA[
 
-		/*"use strict";*/
+		"use strict";
 
 		var filesList = [];
 		var relativePath = "";
@@ -119,7 +119,6 @@
 		document.getElementById("filepicker").addEventListener("change", function(event){
 			let output = document.getElementById("listing");
 			files = event.target.files;
-
 			for (let i=0; i<files.length; i++) {
 				let item = document.createElement("li");
 				item.innerHTML = files[i].webkitRelativePath;
@@ -139,18 +138,14 @@
 
 		function fileFinder(file){
 			let fileToFind = file;
-			console.log(file);
 			for (let i=0; i<filesList.length; i++) {
 				let fileLeftHand = files[i].name.toLowerCase();
-				console.log(fileLeftHand);
 				let fileRightHand = fileToFind.toLowerCase();
-				console.log(fileRightHand);
-
 				if (fileLeftHand==fileRightHand){
 					mailman = files[i];
 					return;
-				}else{
-					console.log(fileToFile + " not found.");
+				}else if (i=filesList.length){
+					console.log(fileToFind + " not found.");
 				}
 			}
 		}
@@ -164,15 +159,16 @@
 		}
 
 		async function cssFinder(){
-			
 			let parser = new DOMParser();
 			let text = await generalFile.text();
 			console.log(text);
 			let xmlDoc = parser.parseFromString(text,"text/html");
-			let tagsList = xmlDoc.getElementsByTagName('link');
 			console.log(xmlDoc);
-			console.log(tagsList[4].getAttributeNode("href").value);
-			
+			let tagsList = xmlDoc.getElementsByTagName('link');
+			console.log(tagsList);
+			for(let i = 0; i<tagsList.length; i++){
+				console.log(tagsList[i].getAttribute('type'));
+			}
 		}
 
 		function jsFinder(){
@@ -180,9 +176,7 @@
 			search all js, by term: src!="" into script tag;
 			*/
 		}
-
 	//]]>
 	</script>
 </body>
-
 </html>
