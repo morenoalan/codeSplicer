@@ -111,7 +111,7 @@
 		"use strict";
 
 		var filesList = [];
-		var relativePath = "";
+		var relativePath;
 		var files;
 		var generalFile;
 		var mailman;
@@ -171,10 +171,9 @@
 				if(tagsList[i].getAttribute('type')=='text/css'){
 					let cssFileContent = await files[filesList.indexOf(relativePath + tagsList[i].getAttribute('href'))].text();
 					console.log(cssFileContent);
-					let parser2 = new DOMParser();
 					let text2 = '<style>' + cssFileContent + '</style>';
-					let xmlDoc2 = parser2.parseFromString(text,"text/html")
-					xmlDoc.getElementsByTagName('link')[i].replaceWith(parser2.parseFromString(text2, "text/html"));
+					xmlDoc.getElementsByTagName('link')[i].insertAdjacentHTML('beforebegin', text2);
+					xmlDoc.getElementsByTagName('link')[i].remove();
 					console.log(xmlDoc);
 				}
 			}
