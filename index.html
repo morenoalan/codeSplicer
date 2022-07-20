@@ -168,6 +168,15 @@
 			console.log(tagsList);
 			for(let i = 0; i<tagsList.length; i++){
 				console.log(tagsList[i].getAttribute('type'));
+				if(tagsList[i].getAttribute('type')=='text/css'){
+					let cssFileContent = await files[filesList.indexOf(relativePath + tagsList[i].getAttribute('href'))].text();
+					console.log(cssFileContent);
+					let parser2 = new DOMParser();
+					let text2 = '<style>' + cssFileContent + '</style>';
+					let xmlDoc2 = parser2.parseFromString(text,"text/html")
+					xmlDoc.getElementsByTagName('link')[i].replaceWith(parser2.parseFromString(text2, "text/html"));
+					console.log(xmlDoc);
+				}
 			}
 		}
 
