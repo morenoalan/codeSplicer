@@ -200,14 +200,13 @@
 					let linkedText = '&lt;script&gt;' + jsFileContent + '&lt;&frasl;script&gt;';
 					//console.log(linkedText);
 					let htmlFile = await files[filesList.indexOf(relativePath + "index.html")].text();
-					console.log(htmlFile);
-					console.log(htmlFile.getElementsByTagName('script')[i]);
-					xmlDoc.getElementsByTagName('script')[i].insertAdjacentText('beforebegin', linkedText);
+					console.log(parser.parseFromString(htmlFile,"text/html").getElementsByTagName('script')[i].parentNode);
+					xmlDoc.getElementsByTagName('script')[i].insertHTML('beforebegin', linkedText);
 					//xmlDoc.getElementsByTagName('script')[i].remove();
 					generalFile = htmlFile;
 				}
 			}
-			console.log(generalFile);
+			console.log(xmlDoc);
 		}
 	//]]>
 	</script>
