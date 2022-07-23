@@ -101,7 +101,7 @@
 	</footer>
 
 	<noscript>
-		EN: You need to enable JavaScript to run this app.<p/>
+		EN: You need to enable JavaScript to run this app.<br/>
         PT: Você precisa ativar o JavaScript para executar esta aplicação.
     </noscript>
 
@@ -192,21 +192,27 @@
 			let xmlDoc = await generalFile;
 			console.log(xmlDoc);
 			let tagsList = xmlDoc.getElementsByTagName('script');
-			console.log(tagsList);
-			for(let i = 0; i<tagsList.length; i++){
+			console.log(tagsList[0]);
+			for(let i = 0; i<=tagsList.length; i++){
 				//console.log(tagsList[i].getAttribute('type'));
 				if(tagsList[i].getAttribute('type')=='text/javascript'){
+					let jsFileContent = await files[filesList.indexOf(relativePath + tagsList[i].getAttribute('src'))];
+					let linkedText = '&lt;script&gt;' + jsFileContent + '&lt;&frasl;script&gt;';
+					xmlDoc.getElementsByTagName('script')[i].remove();
+					xmlDoc.getElementsByTagName('script')[i].insertAdjacentHTML('beforebegin', linkedText);
+					/*
 					let jsFileContent = await files[filesList.indexOf(relativePath + tagsList[i].getAttribute('src'))].text();
 					let linkedText = '&lt;script&gt;' + jsFileContent + '&lt;&frasl;script&gt;';
 					//console.log(linkedText);
 					let htmlFile = await files[filesList.indexOf(relativePath + "index.html")].text();
-					console.log(parser.parseFromString(htmlFile,"text/html").getElementsByTagName('script')[i].parentNode);
-					xmlDoc.getElementsByTagName('script')[i].insertHTML('beforebegin', linkedText);
+					console.log(parser.parseFromString(htmlFile,"text/html").getElementsByTagName('script')[i]);
+					console.log(xmlDoc.getElementsByTagName('script')[i]);//.insertHTML('beforebegin', linkedText);
 					//xmlDoc.getElementsByTagName('script')[i].remove();
 					generalFile = htmlFile;
+					*/
+					console.log(xmlDoc);
 				}
 			}
-			console.log(xmlDoc);
 		}
 	//]]>
 	</script>
