@@ -184,11 +184,6 @@
 
 		async function jsFinder(){
 			let parser = new DOMParser();
-			/*
-			let text = await generalFile.text();
-			console.log(text);
-			let xmlDoc = await parser.parseFromString(text,"text/html");
-			*/
 			let xmlDoc = await generalFile;
 			console.log(xmlDoc);
 			let tagsList = xmlDoc.getElementsByTagName('script');
@@ -200,16 +195,6 @@
 					let linkedText = '&lt;script&gt;' + jsFileContent + '&lt;&frasl;script&gt;';
 					xmlDoc.getElementsByTagName('script')[i].remove();
 					xmlDoc.getElementsByTagName('script')[i].insertAdjacentHTML('beforebegin', linkedText);
-					/*
-					let jsFileContent = await files[filesList.indexOf(relativePath + tagsList[i].getAttribute('src'))].text();
-					let linkedText = '&lt;script&gt;' + jsFileContent + '&lt;&frasl;script&gt;';
-					//console.log(linkedText);
-					let htmlFile = await files[filesList.indexOf(relativePath + "index.html")].text();
-					console.log(parser.parseFromString(htmlFile,"text/html").getElementsByTagName('script')[i]);
-					console.log(xmlDoc.getElementsByTagName('script')[i]);//.insertHTML('beforebegin', linkedText);
-					//xmlDoc.getElementsByTagName('script')[i].remove();
-					generalFile = htmlFile;
-					*/
 					console.log(xmlDoc);
 				}
 			}
