@@ -184,11 +184,6 @@
 
 		async function jsFinder(){
 			let parser = new DOMParser();
-			/*
-			let text = await generalFile.text();
-			console.log(text);
-			let xmlDoc = await parser.parseFromString(text,"text/html");
-			*/
 			let xmlDoc = await generalFile;
 			console.log(xmlDoc);
 			let tagsList = xmlDoc.getElementsByTagName('script');
