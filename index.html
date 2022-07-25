@@ -135,10 +135,11 @@
 		async function loadFile(file){
 			await console.log(file);
 			let parser = new DOMParser();
-			let text = await parser.parseFromString(file,"text/html");
-			await console.log(text);
+			let text = await parser.parseFromString(file.getElementsByTagName('html')[0],"text/html");
+			console.log(text);
+			await console.log(file.getElementsByTagName('html')[0]);
 			//let text = await file.text();
-			document.getElementById('outputField').textContent += await text + '\r\n';
+			document.getElementById('outputField').textContent += await file.getElementsByTagName('html')[0] + '\r\n';
 			//generalFile = document.getElementById('outputField').textContent;
 		}
 
