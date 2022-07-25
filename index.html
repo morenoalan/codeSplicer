@@ -133,9 +133,13 @@
 		}, false);
 
 		async function loadFile(file){
-			let text = await file.text();
-			document.getElementById('outputField').textContent += text + '\r\n';
-			generalFile = document.getElementById('outputField').textContent;
+			await console.log(file);
+			let parser = new DOMParser();
+			let text = await parser.parseFromString(file,"text/html");
+			await console.log(text);
+			//let text = await file.text();
+			document.getElementById('outputField').textContent += await text + '\r\n';
+			//generalFile = document.getElementById('outputField').textContent;
 		}
 
 		function fileFinder(file){
@@ -157,7 +161,6 @@
 			fileFinder(htmlFile);
 			generalFile = mailman;
 			//console.log(generalFile);
-			loadFile(generalFile);
 		}
 
 		async function cssFinder(){
@@ -173,42 +176,32 @@
 				if(tagsList[i].getAttribute('type')=='text/css'){
 					let cssFileContent = await files[filesList.indexOf(relativePath + tagsList[i].getAttribute('href'))].text();
 					//console.log(cssFileContent);
-					let linkedText = '<style>' + cssFileContent;
+					let linkedText = '\<style\>' + cssFileContent + '\<\/style\>';
 					xmlDoc.getElementsByTagName('link')[i].insertAdjacentHTML('beforebegin', linkedText);
 					xmlDoc.getElementsByTagName('link')[i].remove();
 					generalFile = xmlDoc;
 				}
 			}
-			console.log(generalFile);
+			//console.log(generalFile);
 		}
 
 		async function jsFinder(){
 			let parser = new DOMParser();
 			let xmlDoc = await generalFile;
-			console.log(xmlDoc);
+			//console.log(xmlDoc);
 			let tagsList = xmlDoc.getElementsByTagName('script');
-			for(let i = 0; i<=tagsList.length; i++){
-				console.log('conta '+i+', '+tagsList.length);
-				//console.log(tagsList[i].getAttribute('type'));
+			for(let i = 0; i<tagsList.length; i++){
 				if(tagsList[i].getAttribute('type')=='text/javascript'){
-					let jsFileContent = await files[filesList.indexOf(relativePath + tagsList[i].getAttribute('src'))];
-					let linkedText = jsFileContent;
-					xmlDoc.getElementsByTagName('script')[i].insertAdjacentHTML('beforebegin', linkedText);
-					//xmlDoc.getElementsByTagName('script')[i].remove();
-					/*
 					let jsFileContent = await files[filesList.indexOf(relativePath + tagsList[i].getAttribute('src'))].text();
-					let linkedText = '&lt;script&gt;' + jsFileContent + '&lt;&frasl;script&gt;';
-					//console.log(linkedText);
-					let htmlFile = await files[filesList.indexOf(relativePath + "index.html")].text();
-					console.log(parser.parseFromString(htmlFile,"text/html").getElementsByTagName('script')[i]);
-					console.log(xmlDoc.getElementsByTagName('script')[i]);//.insertHTML('beforebegin', linkedText);
-					//xmlDoc.getElementsByTagName('script')[i].remove();
-					generalFile = htmlFile;
-					*/
-					console.log(xmlDoc);
+					let linkedText = '\<script type="text/javascript" id="'+tagsList[i].getAttribute('id')+'"\>' + jsFileContent + '\<\/script\>';
+					xmlDoc.getElementsByTagName('script')[i].insertAdjacentHTML('beforebegin', linkedText);
+					xmlDoc.getElementsByTagName('script')[i+1].remove();
+					//console.log(xmlDoc);
 				}
-				//troubles here;
 			}
+			generalFile = xmlDoc;
+			loadFile(generalFile);
+			console.log(generalFile);
 		}
 	//]]>
 	</script>
