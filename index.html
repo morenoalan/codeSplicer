@@ -139,7 +139,7 @@
 			console.log(text);
 			await console.log(file.getElementsByTagName('html')[0]);
 			//let text = await file.text();
-			document.getElementById('outputField').textContent += await file.getElementsByTagName('html')[0] + '\r\n';
+			document.getElementById('outputField').textContent += await file.getElementsByTagName('html')[0].innerHTML + '\r\n';
 			//generalFile = document.getElementById('outputField').textContent;
 		}
 
