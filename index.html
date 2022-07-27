@@ -134,12 +134,22 @@
 
 		async function loadFile(file){
 			await console.log(file);
-			let parser = new DOMParser();
-			let text = await parser.parseFromString(file.getElementsByTagName('html')[0],"text/html");
-			console.log(text);
-			await console.log(file.getElementsByTagName('html')[0]);
-			//let text = await file.text();
-			document.getElementById('outputField').textContent += await file.getElementsByTagName('html')[0].innerHTML + '\r\n';
+
+			//Only recognize things before html tag, nothing after;
+			console.log(file.documentElement.ownerDocument.childNodes.length);
+			//Finding comments
+			//Fail: it doesn't discriminate between "<?" and "<!--";
+			for(let i=0; i<file.documentElement.ownerDocument.childNodes.length; i++){
+				if(file.documentElement.ownerDocument.childNodes[i].outerHTML!=file.documentElement.outerHTML){
+					document.getElementById('outputField').textContent += await "<!--" + file.documentElement.ownerDocument.childNodes[i].textContent + "-->" + '\r\n';
+				}else{
+					document.getElementById('outputField').textContent += await file.documentElement.ownerDocument.childNodes[i].outerHTML + '\r\n';
+				}
+			}
+			//document.getElementById('outputField').textContent += await file.getElementsByTagName('html')[0].ownerDocument.childNodes[2].outerHTML + '\r\n';
+			//
+			//document.getElementById('outputField').textContent += await file.documentElement.outerHTML + '\r\n';
+			//document.getElementById('outputField').textContent += await file.getElementsByTagName('html')[0].outerHTML + '\r\n';
 			//generalFile = document.getElementById('outputField').textContent;
 		}
 
