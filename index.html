@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!--<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//PT-BR">-->
-<html xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<!DOCTYPE html>
+<html>
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -134,25 +133,23 @@
 
 		async function loadFile(file){
 			await console.log(file);
-
 			//Only recognize things before html tag, nothing after;
 			console.log(file.documentElement.ownerDocument.childNodes.length);
 			//Finding comments
-			//Fail: it doesn't discriminate between "<?" and "<!--";
+			document.getElementById('outputField').textContent += "<!DOCTYPE html>" + '\r\n';
 			for(let i=0; i<file.documentElement.ownerDocument.childNodes.length; i++){
-				if(file.documentElement.ownerDocument.childNodes[i].outerHTML!=file.documentElement.outerHTML){
+				if(file.documentElement.ownerDocument.childNodes[i].nodeType===10){
+					console.log("null tag");
+				}else if(file.documentElement.ownerDocument.childNodes[i].outerHTML!=file.documentElement.outerHTML){
 					document.getElementById('outputField').textContent += await "<!--" + file.documentElement.ownerDocument.childNodes[i].textContent + "-->" + '\r\n';
-				}else{
+					console.log(file.documentElement.ownerDocument.childNodes[i].nodeType);
+				}
+				else{
 					document.getElementById('outputField').textContent += await file.documentElement.ownerDocument.childNodes[i].outerHTML + '\r\n';
 				}
 			}
-			//document.getElementById('outputField').textContent += await file.getElementsByTagName('html')[0].ownerDocument.childNodes[2].outerHTML + '\r\n';
-			//
-			//document.getElementById('outputField').textContent += await file.documentElement.outerHTML + '\r\n';
-			//document.getElementById('outputField').textContent += await file.getElementsByTagName('html')[0].outerHTML + '\r\n';
-			//generalFile = document.getElementById('outputField').textContent;
 		}
-
+		
 		function fileFinder(file){
 			let fileToFind = file;
 			for (let i=0; i<filesList.length; i++) {
@@ -171,35 +168,28 @@
 			let htmlFile = "index.html";
 			fileFinder(htmlFile);
 			generalFile = mailman;
-			//console.log(generalFile);
 		}
 
 		async function cssFinder(){
 			let parser = new DOMParser();
 			let text = await generalFile.text();
-			//console.log(text);
 			let xmlDoc = parser.parseFromString(text,"text/html");
 			console.log(xmlDoc);
 			let tagsList = xmlDoc.getElementsByTagName('link');
-			//console.log(tagsList);
 			for(let i = 0; i<tagsList.length; i++){
-				//console.log(tagsList[i].getAttribute('type'));
 				if(tagsList[i].getAttribute('type')=='text/css'){
 					let cssFileContent = await files[filesList.indexOf(relativePath + tagsList[i].getAttribute('href'))].text();
-					//console.log(cssFileContent);
 					let linkedText = '\<style\>' + cssFileContent + '\<\/style\>';
 					xmlDoc.getElementsByTagName('link')[i].insertAdjacentHTML('beforebegin', linkedText);
 					xmlDoc.getElementsByTagName('link')[i].remove();
 					generalFile = xmlDoc;
 				}
 			}
-			//console.log(generalFile);
 		}
 
 		async function jsFinder(){
 			let parser = new DOMParser();
 			let xmlDoc = await generalFile;
-			//console.log(xmlDoc);
 			let tagsList = xmlDoc.getElementsByTagName('script');
 			for(let i = 0; i<tagsList.length; i++){
 				if(tagsList[i].getAttribute('type')=='text/javascript'){
@@ -207,7 +197,6 @@
 					let linkedText = '\<script type="text/javascript" id="'+tagsList[i].getAttribute('id')+'"\>' + jsFileContent + '\<\/script\>';
 					xmlDoc.getElementsByTagName('script')[i].insertAdjacentHTML('beforebegin', linkedText);
 					xmlDoc.getElementsByTagName('script')[i+1].remove();
-					//console.log(xmlDoc);
 				}
 			}
 			generalFile = xmlDoc;
