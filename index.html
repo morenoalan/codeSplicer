@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<meta charset="utf-8" />
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<title>codeSplicer</title>
 
@@ -106,7 +107,6 @@
 
 	<script type='text/javascript' id='script_main'>
 	//<![CDATA[
-
 		"use strict";
 
 		var filesList = [];
@@ -129,6 +129,8 @@
 			await cssFinder();
 			await console.log(generalFile);
 			await jsFinder();
+			await bsAdapter();
+			await loadFile(generalFile);
 		}, false);
 
 		async function loadFile(file){
@@ -200,8 +202,21 @@
 				}
 			}
 			generalFile = xmlDoc;
-			loadFile(generalFile);
 			console.log(generalFile);
+		}
+
+		async function bsAdapter(){
+			/*
+			//Before \<\/head\>;
+			console.log("\<b:skin\>\<\![CDATA[]]\>\<\/b:skin\>");
+			//After \<body\>;
+			console.log("\<b:section class='header-section' id='header-section' maxwidgets='1' showaddelement='no'\/\>");
+			//After any \<script\>;
+			console.log("//\<\![CDATA[");
+			//Before any \<\/script\>;
+			console.log("//]]\>");
+			*/
+			const selfClosingTags = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr', 'command', 'keygen', 'menuitem'];
 		}
 	//]]>
 	</script>
