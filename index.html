@@ -134,10 +134,7 @@
 		}, false);
 
 		async function loadFile(file){
-			await console.log(file);
-			//Only recognize things before html tag, nothing after;
-			console.log(file.documentElement.ownerDocument.childNodes.length);
-			//Finding comments
+			//Finding comments and publishing all
 			document.getElementById('outputField').textContent += "<!DOCTYPE html>" + '\r\n';
 			for(let i=0; i<file.documentElement.ownerDocument.childNodes.length; i++){
 				if(file.documentElement.ownerDocument.childNodes[i].nodeType===10){
@@ -190,7 +187,6 @@
 		}
 
 		async function jsFinder(){
-			let parser = new DOMParser();
 			let xmlDoc = await generalFile;
 			let tagsList = xmlDoc.getElementsByTagName('script');
 			for(let i = 0; i<tagsList.length; i++){
@@ -217,6 +213,25 @@
 			console.log("//]]\>");
 			*/
 			const selfClosingTags = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr', 'command', 'keygen', 'menuitem'];
+
+			let xmlDoc = await generalFile;
+
+			for (let j = 0; j < selfClosingTags.length; j++){
+				tagSearcher(selfClosingTags[j]);
+			}
+
+			function tagSearcher(goTag){
+				let tagsList = xmlDoc.getElementsByTagName(goTag);
+
+				for(let i = 0; i<tagsList.length; i++){
+					let jsFileContent = await files[filesList.indexOf(relativePath + tagsList[i].getAttribute('src'))].text();
+					let linkedText = '\<script type="text/javascript" id="'+tagsList[i].getAttribute('id')+'"\>' + jsFileContent + '\<\/' + goTag + '\>';
+					xmlDoc.getElementsByTagName('script')[i].insertAdjacentHTML('beforebegin', linkedText);
+					xmlDoc.getElementsByTagName('script')[i+1].remove();
+				}
+			}
+			generalFile = xmlDoc;
+			console.log(generalFile);
 		}
 	//]]>
 	</script>
