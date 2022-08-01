@@ -222,13 +222,18 @@
 
 			function tagSearcher(goTag){
 				let tagsList = xmlDoc.getElementsByTagName(goTag);
-
+				
 				for(let i = 0; i<tagsList.length; i++){
+					console.log(tagsList[i]);
+					/*
 					let jsFileContent = await files[filesList.indexOf(relativePath + tagsList[i].getAttribute('src'))].text();
 					let linkedText = '\<script type="text/javascript" id="'+tagsList[i].getAttribute('id')+'"\>' + jsFileContent + '\<\/' + goTag + '\>';
-					xmlDoc.getElementsByTagName('script')[i].insertAdjacentHTML('beforebegin', linkedText);
-					xmlDoc.getElementsByTagName('script')[i+1].remove();
+					*/
+					
+					xmlDoc.getElementsByTagName(goTag)[i].insertAdjacentHTML('beforebegin', linkedText);
+					xmlDoc.getElementsByTagName(goTag)[i+1].remove();
 				}
+				
 			}
 			generalFile = xmlDoc;
 			console.log(generalFile);
