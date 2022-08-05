@@ -1,0 +1,66 @@
+:root{
+    --color-Background:#282A36;
+    --color-Foreground:#F8F8F2;
+    --color-Selection:#44475A;
+    --color-Comment:#6272A4;
+    --color-Red:#FF5555;
+    --color-Orange:#FFB86C;
+    --color-Yellow:#F1FA8C;
+    --color-Green:#50FA7B;
+    --color-Purple:#BD93F9;
+    --color-Cyan:#8BE9FD;
+    --color-Pink:#FF79C6;
+}
+html, body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+html {
+    background-color: var(--color-Background);
+}
+body {
+    /*background-color: var(--color-Selection);*/
+
+    align-items: center;
+    text-align: center;
+
+    word-break: break-all;
+    word-break: break-word;
+}
+header, main, footer{
+    color: var(--color-Foreground);
+}
+header {
+    display: flex;
+    flex-direction: column;
+    justify-content: normal;
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+#titleHeader {
+    color: var(--color-Purple);
+    font-family: 'Roboto Mono', monospace;
+    font-weight: 500;
+    font-size: 2.5em;
+}
+#titleHeader > span {
+    color: var(--color-Foreground);
+    background: var(--color-Pink);
+    box-shadow: 5px 0 0 0 var(--color-Pink);
+    font-style: italic;
+}
+main {
+    background-color: var(--color-Selection);
+}
+#filepicker {
+    cursor: pointer;
+    width: 500px;
+}
+#outputField {
+    background-color: var(--color-Background);
+    text-align: left;
+    width: 90vw;
+    white-space: pre-wrap;
+    /*word-break: break-word;*/
+}
