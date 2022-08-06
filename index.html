@@ -1,29 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>codeSplicer</title>
 
-	<link rel="preconnect" href="https://fonts.googleapis.com" />
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin" />
-	<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,500;1,300;1,500" rel="stylesheet" />
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,500;1,300;1,500" rel="stylesheet" />
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="crossorigin">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,500;1,300;1,500" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,500;1,300;1,500" rel="stylesheet">
 
-	<link rel="stylesheet" type="text/css" href="style.css" />
-	
-	<b:skin><![CDATA[]]></b:skin>
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<b:section class='header-section' id='header-section' maxwidgets='1' showaddelement='no'/>
-
 	<header id="header">
 		<div id="titleHeader">code<span>Splicer</span></div>
 	</header>
 
 	<main id="main">
-		<input type="file" id="filepicker" name="fileList" webkitdirectory="webkitdirectory" multiple="multiple" />
+		<input type="file" id="filepicker" name="fileList" webkitdirectory="webkitdirectory" multiple="multiple">
 		<ul id="listing"></ul>
 		<ul id="classified"></ul>
 		<pre id="outputField"></pre>
@@ -39,7 +35,6 @@
     </noscript>
 
 	<script type='text/javascript' id='script_main'>
-	//<![CDATA[
 		"use strict";
 
 		var filesList = [];
@@ -84,13 +79,13 @@
 		
 		function fileFinder(file){
 			let fileToFind = file;
-			for (let i=0; i<filesList.length; i++) {
+			for (let i = 0; i < filesList.length; i++) {
 				let fileLeftHand = files[i].name.toLowerCase();
 				let fileRightHand = fileToFind.toLowerCase();
 				if (fileLeftHand==fileRightHand){
 					mailman = files[i];
 					return;
-				}else if (i=filesList.length){
+				}else if (i==filesList.length){
 					console.log(fileToFind + " not found.");
 				}
 			}
@@ -171,7 +166,6 @@
 			generalFile = xmlDoc;
 			console.log(generalFile);
 		}
-	//]]>
 	</script>
 </body>
 </html>
