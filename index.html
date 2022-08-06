@@ -141,29 +141,42 @@
 			console.log("//]]\>");
 			*/
 			const selfClosingTags = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr', 'command', 'keygen', 'menuitem'];
-
+			
 			let xmlDoc = await generalFile;
+			let strDoc = await generalFile.documentElement.ownerDocument.childNodes[1].outerHTML;
 
 			for (let j = 0; j < selfClosingTags.length; j++){
 				tagSearcher(selfClosingTags[j]);
+			}
+
+			function htmlReparus(strTag, linkedText){
+				let strDim = strTag.length;
+				let cut = strDoc.indexOf(strTag);
+				strDoc = strDoc.substr(0,cut) + linkedText + strDoc.substr(cut + strDim);;
 			}
 
 			function tagSearcher(goTag){
 				let tagsList = xmlDoc.getElementsByTagName(goTag);
 				
 				for(let i = 0; i<tagsList.length; i++){
-					console.log(tagsList[i]);
-					/*
-					let jsFileContent = await files[filesList.indexOf(relativePath + tagsList[i].getAttribute('src'))].text();
-					let linkedText = '\<script type="text/javascript" id="'+tagsList[i].getAttribute('id')+'"\>' + jsFileContent + '\<\/' + goTag + '\>';
-					*/
-					
-					xmlDoc.getElementsByTagName(goTag)[i].insertAdjacentHTML('beforebegin', linkedText);
-					xmlDoc.getElementsByTagName(goTag)[i+1].remove();
+					let strTag = tagsList[i].outerHTML;
+					let linkedText;
+					if(~strTag.indexOf(" \/\>")){
+						linkedText = strTag;
+					}else if(~strTag.indexOf("\/\>")){
+						let cut = strTag.indexOf("\/\>");
+						linkedText = strTag.substr(0,cut)+" "+strTag.substr(cut);
+					}else if(~strTag.indexOf("\>")){
+						let cut = strTag.indexOf("\>");
+						linkedText = strTag.substr(0,cut)+" \/"+strTag.substr(cut);
+					}
+					htmlReparus(strTag, linkedText);
+					//console.log(xmlDoc.documentElement.ownerDocument.childNodes[1].outerHTML.indexOf(strTag));
+					//xmlDoc.getElementsByTagName(goTag)[i].remove();
 				}
 				
 			}
-			generalFile = xmlDoc;
+			generalFile = strDoc;
 			console.log(generalFile);
 		}
 	</script>
