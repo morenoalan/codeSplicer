@@ -180,8 +180,35 @@
 				}
 				
 			}
+
+			function scriptTagSearcher(){
+				let tagsList = xmlDoc.getElementsByTagName('script');
+				console.log(tagsList);
+				console.log(tagsList.length);
+
+				for(let i = 0; i<tagsList.length; i++){
+					let strTag = tagsList[i];
+					console.log(strTag);
+					let linkedText;
+					/*
+					let cut = strTag.indexOf("\>");
+					console.log(cut);
+					linkedText = strTag.substr(0,cut)+"\/\/\<\!\[CDATA\["+strTag.substr(cut);
+					console.log(strTag.substr(0,cut));
+					let cut2 = strTag.indexOf("\<\/script\>");
+					linkedText = strTag.substr(0,cut2)+"\/\/\]\]\>"+strTag.substr(cut2);
+					htmlReparus(strTag, linkedText);
+					*/
+					let fragment1 = "\/\/\<\!\[CDATA\[";
+					linkedText = strTag.insertAdjacentHTML('afterbegin', fragment1);
+					let fragment2 = "\/\/\]\]\>";
+					linkedText = strTag.insertAdjacentHTML('beforeend', fragment2);
+					htmlReparus(strTag, linkedText);
+				}
+			}
+			scriptTagSearcher();
 			generalFile = strDoc;
-			console.log(generalFile);
+			//console.log(generalFile);
 		}
 	</script>
 </body>
