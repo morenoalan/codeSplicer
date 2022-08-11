@@ -207,6 +207,23 @@
 				}
 			}
 			scriptTagSearcher();
+
+			function headTagSearcher(){
+				let tagsList = xmlDoc.getElementsByTagName('head');
+				console.log(tagsList);
+				console.log(tagsList.length);
+
+				for(let i = 0; i<tagsList.length; i++){
+					let strTag = tagsList[i];
+					console.log(strTag);
+					let linkedText;
+					let fragment = "\<b:skin\>\<\!\[CDATA\[\]\]\>\<\/b:skin\>";
+					linkedText = strTag.insertAdjacentHTML('beforeend', fragment);
+					htmlReparus(strTag, linkedText);
+				}
+			}
+			headTagSearcher();
+
 			generalFile = strDoc;
 			//console.log(generalFile);
 		}
