@@ -134,16 +134,7 @@
 		}
 
 		async function bsAdapter(){
-			/*
-			//Before \<\/head\>;
-			console.log("\<b:skin\>\<\![CDATA[]]\>\<\/b:skin\>");
-			//After \<body\>;
-			console.log("\<b:section class='header-section' id='header-section' maxwidgets='1' showaddelement='no'\/\>");
-			//After any \<script\>;
-			console.log("//\<\![CDATA[");
-			//Before any \<\/script\>;
-			console.log("//]]\>");
-			*/
+			
 			const selfClosingTags = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr', 'command', 'keygen', 'menuitem'];
 			
 			let xmlDoc = await generalFile;
@@ -180,75 +171,33 @@
 				}
 				
 			}
-			/*
-			function scriptTagSearcher(){
-				let tagsList = xmlDoc.getElementsByTagName('script');
-				console.log(tagsList);
-				console.log(tagsList.length);
-
-				for(let i = 0; i<tagsList.length; i++){
-					let strTag = tagsList[i];
-					console.log(strTag);
-					let linkedText;
-					let fragment1 = "\/\/\<\!\[CDATA\[";
-					linkedText = strTag.insertAdjacentHTML('afterbegin', fragment1);
-					let fragment2 = "\/\/\]\]\>";
-					linkedText = strTag.insertAdjacentHTML('beforeend', fragment2);
-					htmlReparus(strTag, linkedText);
-					*/
-					/*
-					let cut = strTag.indexOf("\>");
-					console.log(cut);
-					linkedText = strTag.substr(0,cut)+"\/\/\<\!\[CDATA\["+strTag.substr(cut);
-					console.log(strTag.substr(0,cut));
-					let cut2 = strTag.indexOf("\<\/script\>");
-					linkedText = strTag.substr(0,cut2)+"\/\/\]\]\>"+strTag.substr(cut2);
-					htmlReparus(strTag, linkedText);
-					*/
-					/*
-				}
-			}
-			scriptTagSearcher();
-			*/
-			/*
-			function headTagSearcher(){
-				let tagsList = xmlDoc.getElementsByTagName('head');
-
-				for(let i = 0; i<tagsList.length; i++){
-					let strTag = tagsList[i];
-					console.log(strTag);
-					let linkedText;
-					let fragment = "\<b:skin\>\<\!\[CDATA\[\]\]\>\<\/b:skin\>";
-					linkedText = strTag.insertAdjacentHTML('beforeend', fragment);
-					htmlReparus(strTag, linkedText);
-				}
-			}
-			headTagSearcher();
-			*/
-
-			function generalTagSearcher(tag, content){
+			
+			function addFragmentByTag(tag, content){
 				let tagsList = xmlDoc.getElementsByTagName(tag);
 				console.log(tagsList);
 				console.log(tagsList.length);
 
-				for(let i = 0; i<tagsList.length; i++){
+				let contentList = content;
+				
+				for(let i = 0; i < tagsList.length; i++){
 					let strTag = tagsList[i];
 					console.log(strTag);
-					let linkedText;
-					let fragment = "\<b:skin\>\<\!\[CDATA\[\]\]\>\<\/b:skin\>";
-					linkedText = strTag.insertAdjacentHTML('beforeend', fragment);
-					htmlReparus(strTag, linkedText);
+					for(let j = 0; j < contentList.length; j++){
+						let linkedText = strTag.insertAdjacentHTML(contentList[j][0], contentList[j][1]);
+						htmlReparus(strTag, linkedText);
+					}
 				}
 			}
-			generalTagSearcher('script',[
-				['\/\/\<\!\[CDATA\[','afterbegin'],
-				['\/\/\]\]\>','beforeend']
+
+			addFragmentByTag('script',[
+				['afterbegin','\/\/\<\!\[CDATA\['],
+				['beforeend','\/\/\]\]\>']
 			]);
-			generalTagSearcher('head',[
-				['\<b:skin\>\<\!\[CDATA\[\]\]\>\<\/b:skin\>', 'beforeend']
+			addFragmentByTag('head',[
+				['beforeend','\<b:skin\>\<\!\[CDATA\[\]\]\>\<\/b:skin\>']
 			]);
-			generalTagSearcher('body',[
-				['\<b:section class="header-section" id="header-section" maxwidgets="1" showaddelement="no" \/\>', 'afterbegin']
+			addFragmentByTag('body',[
+				['afterbegin','\<b:section class="header-section" id="header-section" maxwidgets="1" showaddelement="no" \/\>']
 			]);
 
 			generalFile = strDoc;
