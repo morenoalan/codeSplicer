@@ -180,7 +180,7 @@
 				}
 				
 			}
-
+			/*
 			function scriptTagSearcher(){
 				let tagsList = xmlDoc.getElementsByTagName('script');
 				console.log(tagsList);
@@ -190,6 +190,12 @@
 					let strTag = tagsList[i];
 					console.log(strTag);
 					let linkedText;
+					let fragment1 = "\/\/\<\!\[CDATA\[";
+					linkedText = strTag.insertAdjacentHTML('afterbegin', fragment1);
+					let fragment2 = "\/\/\]\]\>";
+					linkedText = strTag.insertAdjacentHTML('beforeend', fragment2);
+					htmlReparus(strTag, linkedText);
+					*/
 					/*
 					let cut = strTag.indexOf("\>");
 					console.log(cut);
@@ -199,17 +205,29 @@
 					linkedText = strTag.substr(0,cut2)+"\/\/\]\]\>"+strTag.substr(cut2);
 					htmlReparus(strTag, linkedText);
 					*/
-					let fragment1 = "\/\/\<\!\[CDATA\[";
-					linkedText = strTag.insertAdjacentHTML('afterbegin', fragment1);
-					let fragment2 = "\/\/\]\]\>";
-					linkedText = strTag.insertAdjacentHTML('beforeend', fragment2);
-					htmlReparus(strTag, linkedText);
+					/*
 				}
 			}
 			scriptTagSearcher();
-
+			*/
+			/*
 			function headTagSearcher(){
 				let tagsList = xmlDoc.getElementsByTagName('head');
+
+				for(let i = 0; i<tagsList.length; i++){
+					let strTag = tagsList[i];
+					console.log(strTag);
+					let linkedText;
+					let fragment = "\<b:skin\>\<\!\[CDATA\[\]\]\>\<\/b:skin\>";
+					linkedText = strTag.insertAdjacentHTML('beforeend', fragment);
+					htmlReparus(strTag, linkedText);
+				}
+			}
+			headTagSearcher();
+			*/
+
+			function generalTagSearcher(tag, content){
+				let tagsList = xmlDoc.getElementsByTagName(tag);
 				console.log(tagsList);
 				console.log(tagsList.length);
 
@@ -222,7 +240,16 @@
 					htmlReparus(strTag, linkedText);
 				}
 			}
-			headTagSearcher();
+			generalTagSearcher('script',[
+				['\/\/\<\!\[CDATA\[','afterbegin'],
+				['\/\/\]\]\>','beforeend']
+			]);
+			generalTagSearcher('head',[
+				['\<b:skin\>\<\!\[CDATA\[\]\]\>\<\/b:skin\>', 'beforeend']
+			]);
+			generalTagSearcher('body',[
+				['\<b:section class="header-section" id="header-section" maxwidgets="1" showaddelement="no" \/\>', 'afterbegin']
+			]);
 
 			generalFile = strDoc;
 			//console.log(generalFile);
