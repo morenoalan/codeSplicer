@@ -141,7 +141,7 @@
 			let strDoc = await generalFile.documentElement.ownerDocument.childNodes[1].outerHTML;
 
 			for (let j = 0; j < selfClosingTags.length; j++){
-				tagSearcher(selfClosingTags[j]);
+				fixTagEnding(selfClosingTags[j]);
 			}
 
 			function htmlReparus(strTag, linkedText){
@@ -150,7 +150,7 @@
 				strDoc = strDoc.substr(0,cut) + linkedText + strDoc.substr(cut + strDim);;
 			}
 
-			function tagSearcher(goTag){
+			function fixTagEnding(goTag){
 				let tagsList = xmlDoc.getElementsByTagName(goTag);
 				
 				for(let i = 0; i<tagsList.length; i++){
