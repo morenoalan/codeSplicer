@@ -110,7 +110,8 @@ async function bsAdapter(){
     function htmlReparus(strTag, linkedText){
         let strDim = strTag.length;
         let cut = strDoc.indexOf(strTag);
-        strDoc = strDoc.substr(0,cut) + linkedText + strDoc.substr(cut + strDim);;
+        strDoc = strDoc.substr(0,cut) + linkedText + strDoc.substr(cut + strDim);
+        //console.log(strDoc);
     }
 
     function fixTagEnding(goTag){
@@ -133,21 +134,22 @@ async function bsAdapter(){
             //xmlDoc.getElementsByTagName(goTag)[i].remove();
         }
     }
-    
+
     function addFragmentByTag(tag, content){
         let tagsList = xmlDoc.getElementsByTagName(tag);
         console.log(tagsList);
         console.log(tagsList.length);
 
         let contentList = content;
-        
+
         for(let i = 0; i < tagsList.length; i++){
             let strTag = tagsList[i];
-            console.log(strTag);
             for(let j = 0; j < contentList.length; j++){
-                let linkedText = strTag.insertAdjacentHTML(contentList[j][0], contentList[j][1]);
+                let linkedText = strTag.insertAdjacentHTML(contentList[j][0], '\r\n'+contentList[j][1]+'\r\n');
+                console.log(contentList[j][0]+", "+contentList[j][1]);
                 htmlReparus(strTag, linkedText);
             }
+            console.log(strTag);
         }
     }
 
@@ -161,7 +163,8 @@ async function bsAdapter(){
     addFragmentByTag('body',[
         ['afterbegin','\<b:section class="header-section" id="header-section" maxwidgets="1" showaddelement="no" \/\>']
     ]);
-
-    generalFile = strDoc;
+    console.log(generalFile);
+    console.log(generalFile.documentElement.ownerDocument.childNodes[1].outerHTML);
+    generalFile = generalFile.documentElement.ownerDocument.childNodes[1].outerHTML;
     //console.log(generalFile);
 }
