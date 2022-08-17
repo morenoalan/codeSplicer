@@ -97,6 +97,9 @@ async function jsFinder(){
 }
 
 async function bsAdapter(){
+
+    //Next steps to code:
+    //separate elements <link> about fonts joined with "&";
     
     const selfClosingTags = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr', 'command', 'keygen', 'menuitem'];
     
