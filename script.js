@@ -20,7 +20,9 @@ document.getElementById("filepicker").addEventListener("change", async function(
     await cssFinder();
     await console.log(generalFile);
     await jsFinder();
-    await bsAdapter();
+    if(document.getElementById("blogspotCheckbox").checked){
+        await bsAdapter();
+    }
     await loadFile(originalFile, generalFile);
 }, false);
 
@@ -97,7 +99,6 @@ async function jsFinder(){
 }
 
 async function bsAdapter(){
-
     //Next steps to code:
     //separate elements <link> about fonts joined with "&";
     
