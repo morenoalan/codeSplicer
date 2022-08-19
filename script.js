@@ -167,8 +167,29 @@ async function bsAdapter(){
     addFragmentByTag('body',[
         ['afterbegin','\<b:section class="header-section" id="header-section" maxwidgets="1" showaddelement="no" \/\>']
     ]);
+
+    generalFile = generalFile.documentElement.ownerDocument.childNodes[1].outerHTML;
+
+    let allTags = await generalFile.documentElement.ownerDocument.childNodes.outerHTML;
+    let allAttributes = [];
+    
+    function withoutValueAttribSearcher(){
+        for (let i = 0; i < allAttributes.length; i++){
+            if(!allAttributes[i].getAttribute(i)
+        }
+    }
+
+    function attribAdapter(){
+        for(let i = 0; i < allTags.length; i++){
+            allAttributes = allTags[i].getAttributeNames();
+            withoutValueAttribSearcher();
+        }
+    }
+    attribAdapter();
+
     console.log(generalFile);
     console.log(generalFile.documentElement.ownerDocument.childNodes[1].outerHTML);
     generalFile = generalFile.documentElement.ownerDocument.childNodes[1].outerHTML;
     //console.log(generalFile);
+    generalFile = generalFile.documentElement.ownerDocument.childNodes[1].outerHTML;
 }
