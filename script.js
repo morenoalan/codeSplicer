@@ -175,7 +175,9 @@ async function bsAdapter(){
     
     function withoutValueAttribSearcher(){
         for (let i = 0; i < allAttributes.length; i++){
-            if(!allAttributes[i].getAttribute(i)
+            if(!allAttributes[i].getAttribute(i)){
+                
+            }
         }
     }
 
