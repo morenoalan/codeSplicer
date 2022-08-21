@@ -170,13 +170,14 @@ async function bsAdapter(){
 
     generalFile = generalFile.documentElement.ownerDocument.childNodes[1].outerHTML;
 
-    let allTags = await generalFile.documentElement.ownerDocument.childNodes.outerHTML;
+    let allTags = await generalFile.getElementsByTagName('*');
+    console.log(allTags);
     let allAttributes = [];
     
     function withoutValueAttribSearcher(){
         for (let i = 0; i < allAttributes.length; i++){
             if(!allAttributes[i].getAttribute(i)){
-                
+                console.log(allAttributes[i].getAttribute(i));
             }
         }
     }
