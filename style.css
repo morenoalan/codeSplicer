@@ -31,6 +31,9 @@ body {
 header, main, footer{
     color: var(--color-Foreground);
 }
+ul{
+    list-style: none;
+}
 header {
     display: flex;
     flex-direction: column;
